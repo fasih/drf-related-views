@@ -1,24 +1,22 @@
-import datetime
-import urllib
-
-from urlparse import urlparse
+from datetime import datetime
 from operator import itemgetter
 from collections import OrderedDict
-
-from rest_framework import generics
-from rest_framework.views import APIView as GAPIView
-from rest_framework.response import Response
-from rest_framework.request import Request
-from rest_framework.renderers import JSONRenderer
 
 from django.core.urlresolvers import resolve,reverse
 from django.http.request import QueryDict
 from django.utils.http import is_safe_url
-from django.http.response import *
 from django.conf import settings
+from django.http.response import *
+
+from rest_framework.views import APIView as GAPIView
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.request import Request
+from rest_framework import generics
 
 from .mixins import RelatedView
 from .utility import is_ajax
+from .py2_3 import *
 
 class ListAPIView(generics.ListAPIView,RelatedView):
 
@@ -44,7 +42,7 @@ class ListAPIView(generics.ListAPIView,RelatedView):
         return response
 
     def filter_queryset(self,queryset):
-	""" 
+        """ 
         Overridden generics.ListAPIView filter_queryset method for adding the filters applied to this view.
         Appends filters applied to ListAPIView instance as applied_filters attribute.
         It fetches the filter from filter_backends by calling its get_applied_filters method.
@@ -58,7 +56,7 @@ class ListAPIView(generics.ListAPIView,RelatedView):
                 filters.update(backendobj.get_applied_filters())
         self.applied_filters = OrderedDict()
         for key,value in filters.items():
-            if isinstance(value,datetime.datetime):
+            if isinstance(value,datetime):
                 self.applied_filters[key]=value
                 del filters[key]
         self.applied_filters.update(sorted(filters.items(),key=itemgetter(1),reverse=True))
@@ -208,7 +206,7 @@ class FormView(APIView,RelatedView):
         try:
             urlpath = reverse(view_url)
             query_dict.update({'_caller':self.view_url_name})
-            url = urlpath + '?'+ urllib.urlencode(query_dict)
+            url = urlpath + '?'+ urlencode(query_dict)
         except:
             #@TODO need to clean every session data here
             url = reverse('homepage')
@@ -241,7 +239,7 @@ class FormView(APIView,RelatedView):
 
     def get_query_url(self,current_path,query_params={}):
         join_char = '&' if urlparse(current_path).query else '?'
-        query_url = current_path + join_char + urllib.urlencode(query_params)
+        query_url = current_path + join_char + urlencode(query_params)
         return query_url
  
     def get_view_cache(self,key=None,pop=False):

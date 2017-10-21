@@ -1,10 +1,13 @@
-import urllib, types, sys, copy, hashlib
+import types, sys, copy, hashlib
+
+from itertools import chain
+from operator import itemgetter
 
 from django.db import models
 from django.http import Http404
 from django.conf import settings
-from django.shortcuts import render
 from django.core.cache import cache
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.core.exceptions import FieldError
 
@@ -13,9 +16,7 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.pagination import PageNumberPagination
 
-from itertools import chain
-from operator import itemgetter
-
+from .py2_3 import *
 
 def register_as_module(cls, mod_name):
     '''
@@ -149,7 +150,7 @@ class Memoized(object):
     def _create_cache_key(self,args,kwargs,initkwargs):
         kwargs.update(initkwargs)
         kwargs.pop('format','')
-        filters = urllib.urlencode(kwargs)
+        filters = urlencode(kwargs)
         cache_key = hashlib.sha1('%s:%s' %(self._func.__name__,filters)).hexdigest()
         return cache_key[:250]
     

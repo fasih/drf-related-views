@@ -1,9 +1,10 @@
-import urllib
-import urlparse as urlp
 from django.conf import settings
 from django.http.response import *
+
 from rest_framework.response import Response
+
 from .utility import subtractlists,Memoized,DummyRequest
+from .py2_3 import *
 
 AS_MAIN=1
 
@@ -61,10 +62,10 @@ class RelatedView(object):
         """
         updated_dict={}
         requrl = request.build_absolute_uri()
-        urlparts = urlp.urlsplit(requrl)
-        unquote_query = urllib.unquote(urlparts.query)
-        updated_dict = dict(urlp.parse_qs(unquote_query))
-        updated_dict = { k:','.join(v) for k,v in updated_dict.iteritems()}
+        urlparts = urlsplit(requrl)
+        unquote_query = unquote(urlparts.query)
+        updated_dict = dict(parse_qs(unquote_query))
+        updated_dict = { k:','.join(v) for k,v in updated_dict.items()}
         updated_dict.update(self.kwargs)
 
         self.kwargs = updated_dict
