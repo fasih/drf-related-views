@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
   name = 'drf-related-views',
   packages = ['rest_framework_related'],
-  version = '0.0.2',
+  version = '0.0.3',
   description = 'Related Views for Django Rest Framework',
   author = 'Fasih Ahmad Fakhri',
   author_email = 'fasihahmadfakhri@gmail.com',
@@ -27,6 +27,7 @@ setup(
     ],
   install_requires=[
         'Django>=1.6.3',
+        'django-filter>=0.11.0',
         'djangorestframework>=3.2.4',
     ],
 )

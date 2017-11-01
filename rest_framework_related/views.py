@@ -55,6 +55,7 @@ class ListAPIView(generics.ListAPIView,RelatedView):
             if hasattr(backendobj,'get_applied_filters'):
                 filters.update(backendobj.get_applied_filters())
         self.applied_filters = OrderedDict()
+        from datetime import datetime
         for key,value in filters.items():
             if isinstance(value,datetime):
                 self.applied_filters[key]=value

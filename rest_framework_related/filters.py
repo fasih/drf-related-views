@@ -6,9 +6,13 @@ from django.http.request import QueryDict
 from django.core.exceptions import FieldError
 from django.db.models.fields import FieldDoesNotExist
 
-from rest_framework.filters import DjangoFilterBackend
+try:
+    from django_filters.rest_framework import DjangoFilterBackend
+except ImportError:
+    # Import for supportable djangorestframework == 3.2.4
+    from rest_framework.filters import DjangoFilterBackend
 
-from .utility import cstolist,NoPagination
+from .utility import cstolist, NoPagination
 
 class ListFilter(django_filters.Filter):
     def filter(self,qs,value):
