@@ -25,9 +25,9 @@ class ListFilter(django_filters.Filter):
             # Use 'in' query only when multiple filters are to be applied on single fields otherwise direct matching'
             # For other usecases please consider this point in mind before extending
             if len(value)>1:
-                return qs.filter(**{'%s__%s'%(self.name,self.lookup_type):value})
+                return self.get_method(qs)(**{'%s__%s'%(self.name,self.lookup_expr):value})
             else:
-                return qs.filter(**{'%s'%(self.name):value[0]})
+                return self.get_method(qs)(**{'%s'%(self.name):value[0]})
         return qs
 
 class ValueListFilter(django_filters.Filter):

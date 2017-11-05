@@ -3,12 +3,12 @@ from setuptools import setup
 setup(
   name = 'drf-related-views',
   packages = ['rest_framework_related'],
-  version = '0.0.3',
+  version = '0.0.4',
   description = 'Related Views for Django Rest Framework',
   author = 'Fasih Ahmad Fakhri',
   author_email = 'fasihahmadfakhri@gmail.com',
   url = 'https://github.com/fasihahmad/django-rest-framework-related-views',
-  download_url='https://github.com/fasihahmad/django-rest-framework-related-views/archive/v0.0.2.tar.gz',
+  download_url='https://github.com/fasihahmad/django-rest-framework-related-views/archive/v0.0.4.tar.gz',
   keywords = 'django rest framework related views',
   license='GPL-3.0',
   classifiers=[
@@ -29,5 +29,6 @@ setup(
         'Django>=1.6.3',
         'django-filter>=0.11.0',
         'djangorestframework>=3.2.4',
+        'djangorestframework-filters>=0.10.2'
     ],
 )
