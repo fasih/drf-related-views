@@ -147,7 +147,7 @@ class RelatedView(object):
                 related_params.update(self.kwargs)
             elif '=' in p:
                 p_split = p.split('=')
-                related_params[p_split[0]]=p_split[1]
+                related_params[p_split[0]]=p_split[1].replace(':',',')
             elif ' as ' in p:
                 p_split = p.split(' as ')
                 if self.kwargs.get(p_split[0]):
