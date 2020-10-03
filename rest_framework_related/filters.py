@@ -139,7 +139,7 @@ class OrderBackend(object):
         self.field_sort = None
         negative_fn = lambda x:x[1:] if x.startswith('-') else '-'+x
         positive_fn = lambda x:x[1:] if x.startswith('-') else x
-        desc_order = True if order_param.startswith('-') else False
+        desc_order = bool(order_param.startswith('-'))
         order_param = order_param[1:] if desc_order else order_param
         order_by_tuple = self.order_by_clause.get(order_param,[])
         if desc_order:
