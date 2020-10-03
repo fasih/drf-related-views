@@ -90,7 +90,7 @@ def cstolist(value):
         if rawvalues[0].isdigit():
             value = [int(v) for v in rawvalues]
         else:
-            value = [v for v in rawvalues]
+            value = list(rawvalues)
     elif isinstance(value,(int,)):
         value=[value]
     return value
