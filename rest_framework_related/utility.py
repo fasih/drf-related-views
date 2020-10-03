@@ -173,7 +173,9 @@ class DummyRequest(object):
         A substitute for rest_framework request object which provides mutable query_params attribute. 
         All the related views are passed DummyRequest instance.The request data that is passed to Related Views are inserted into ites query_params attribute.
     """
-    def __init__(self,request,data={}):
+    def __init__(self,request,data=None):
+        if data is None:
+            data = {}
         self._request = request
         self.query_params = {}
         self.isDummy = True
