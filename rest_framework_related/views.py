@@ -183,14 +183,16 @@ class FormView(APIView,RelatedView):
         return (url_name,referer)
 
 
-    def redirect_to(self,url,data={}):
+    def redirect_to(self,url,data=None):
+        if data is None:
+            data = {}
         if is_ajax(self.request):
             resdata = {'location':url}
             resdata.update(data)
             return Response(resdata)
         return Response({},status=302,headers={'Location':url})
 
-    def send_next(self,name,packet=None,query_dict={},returnurl=True,finalurl=None,data={}):
+    def send_next(self,name,packet=None,query_dict=None,returnurl=True,finalurl=None,data=None):
         """
         sends to next page maintaing history in session.
         - name : Name of the form view to be sent next without _form_view
@@ -203,6 +205,10 @@ class FormView(APIView,RelatedView):
         - finalurl - the final url to send.it resets the whole flow
 
         """
+        if query_dict is None:
+            query_dict = {}
+        if data is None:
+            data = {}
         view_url = name + '_form_view'
         try:
             urlpath = reverse(view_url)
@@ -224,7 +230,11 @@ class FormView(APIView,RelatedView):
 
         return self.redirect_to(url,data)
 
-    def send_back(self,packet=None,data={},query_dict={}):
+    def send_back(self,packet=None,data=None,query_dict=None):
+        if data is None:
+            data = {}
+        if query_dict is None:
+            query_dict = {}
         obj = self._get_last_flow(pop=True)
         if obj:
             is_last = not self.get_flow()
@@ -238,7 +248,9 @@ class FormView(APIView,RelatedView):
             return self.redirect_to(redirect_url,data)
         return self.redirect_to(reverse('homepage'),data)
 
-    def get_query_url(self,current_path,query_params={}):
+    def get_query_url(self,current_path,query_params=None):
+        if query_params is None:
+            query_params = {}
         join_char = '&' if urlparse(current_path).query else '?'
         query_url = current_path + join_char + urlencode(query_params)
         return query_url
