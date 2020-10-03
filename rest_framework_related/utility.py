@@ -58,7 +58,7 @@ class BasicModelManager(models.Manager):
         self._model = kwargs.pop('model',self.__class__)
         self.fields = self._model._meta.get_all_field_names()
 
-        self.filters = dict()
+        self.filters = {}
         self._set_filter(show_on_site = True)
         self._set_filter(site = settings.SITE_ID)
         self._set_filter(sites = settings.SITE_ID)
